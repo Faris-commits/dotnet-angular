@@ -17,17 +17,15 @@ export class RolesModalComponent {
   rolesUpdated = false;
 
   updateChecked(checkedValue: string) {
-    if(this.selectedRoles.includes(checkedValue)) {
+    if (this.selectedRoles.includes(checkedValue)) {
       this.selectedRoles = this.selectedRoles.filter(r => r !== checkedValue)
     } else {
       this.selectedRoles.push(checkedValue);
     }
   }
 
-  onSelectRoles(){
+  onSelectRoles() {
     this.rolesUpdated = true;
     this.bsModalRef.hide();
   }
-
-
 }

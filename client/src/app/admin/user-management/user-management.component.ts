@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminService } from '../../_services/admin.service';
 import { User } from '../../_models/user';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -12,18 +12,17 @@ import { RolesModalComponent } from '../../modals/roles-modal/roles-modal.compon
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent implements OnInit {
-private adminService = inject(AdminService);
-private modalService = inject(BsModalService);
-users:  User[] = [];
-bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
+  private adminService = inject(AdminService);
+  private modalService = inject(BsModalService);
+  users: User[] = [];
 
-
+  bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
 
   ngOnInit(): void {
-    this.getUsersWithRoles(); 
+    this.getUsersWithRoles();
   }
 
-  openRolesModal(user: User){
+  openRolesModal(user: User) {
     const initialState: ModalOptions = {
       class: 'modal-lg',
       initialState: {
@@ -33,13 +32,12 @@ bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent
         availableRoles: ['Admin', 'Moderator', 'Member'],
         users: this.users,
         rolesUpdated: false
-
       }
     }
     this.bsModalRef = this.modalService.show(RolesModalComponent, initialState);
     this.bsModalRef.onHide?.subscribe({
       next: () => {
-        if(this.bsModalRef.content && this.bsModalRef.content.rolesUpdated){
+        if (this.bsModalRef.content && this.bsModalRef.content.rolesUpdated) {
           const selectedRoles = this.bsModalRef.content.selectedRoles;
           this.adminService.updateUserRoles(user.username, selectedRoles).subscribe({
             next: roles => user.roles = roles
@@ -49,8 +47,7 @@ bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent
     })
   }
 
-
-  getUsersWithRoles(){
+  getUsersWithRoles() {
     this.adminService.getUserWithRoles().subscribe({
       next: users => this.users = users
     })
