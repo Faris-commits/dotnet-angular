@@ -13,6 +13,7 @@ namespace API.Controllers;
 public class UsersController(IUserRepository userRepository, IMapper mapper, 
     IPhotoService photoService) : BaseApiController
 {
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
